@@ -4,7 +4,7 @@ use IO;
 use Socket;
 use AOL::SFLAP;
 
-$VERSION      = "0.33";
+$VERSION      = "0.34";
 $TOC_VERSION  = "1.0";
 $ROASTING_KEY = "Tic/Toc";
 
@@ -179,7 +179,7 @@ sub new {
   #print "*************************** AOL::TOC::new(...) sflap = $self->{sflap}\n";
   #print "                            sflap cb = $self->{sflap}{callback}\n";
 
-  #$self->{sflap}->register_callback($AOL::SFLAP::SFLAP_SIGNON,    \&sflap_signon, $password, "english", "Perl 0.1", $self);
+  #$self->{sflap}->register_callback($AOL::SFLAP::SFLAP_SIGNON,    \&sflap_signon, $password, "english", "TIK:\$Revision: 1.148 \$", $self);
   #$self->{sflap}->register_callback($AOL::SFLAP::SFLAP_DATA,      \&sflap_data, $self);
   #$self->{sflap}->register_callback($AOL::SFLAP::SFLAP_ERROR,     \&sflap_error, $self);
   #$self->{sflap}->register_callback($AOL::SFLAP::SFLAP_SIGNOFF,   \&sflap_signoff, $self);
@@ -224,7 +224,7 @@ sub debug {
 sub connect {
   my ($self) = @_;
 
-  $self->{sflap}->register_callback($AOL::SFLAP::SFLAP_SIGNON,    \&sflap_signon, $self->{password}, "english", "Perl 0.1", $self);
+  $self->{sflap}->register_callback($AOL::SFLAP::SFLAP_SIGNON,    \&sflap_signon, $self->{password}, "english", "TIK:\$Revision: 1.148 \$", $self);
   $self->{sflap}->register_callback($AOL::SFLAP::SFLAP_DATA,      \&sflap_data, $self);
   $self->{sflap}->register_callback($AOL::SFLAP::SFLAP_ERROR,     \&sflap_error, $self);
   $self->{sflap}->register_callback($AOL::SFLAP::SFLAP_SIGNOFF,   \&sflap_signoff, $self);
