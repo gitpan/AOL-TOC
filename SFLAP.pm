@@ -4,7 +4,7 @@ use IO;
 use IO::Select;
 use Socket;
 
-$VERSION = "0.32";
+$VERSION = "0.33";
 
 $SFLAP_SIGNON    = 1;
 $SFLAP_DATA      = 2;
@@ -70,8 +70,7 @@ sub new {
     ipaddr	=> $ipaddr,
     port	=> $port,
     nickname	=> $nickname,
-    sequence    => 1,
-    caller	=> "$file:$line"
+    sequence    => 1
   };
   bless($self);
 
@@ -112,7 +111,7 @@ sub set_debug {
 sub debug {
   my ($self, @args) = @_;
 
-  if ($self->{debug_level} > 0) {
+  if (exists $self->{debug_level} && $self->{debug_level} > 0) {
     print @args;
   }
 }

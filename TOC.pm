@@ -4,7 +4,7 @@ use IO;
 use Socket;
 use AOL::SFLAP;
 
-$VERSION      = "0.32";
+$VERSION      = "0.33";
 $TOC_VERSION  = "1.0";
 $ROASTING_KEY = "Tic/Toc";
 
@@ -101,7 +101,7 @@ sub roast_password {
 
 sub encode_string {
   my ($self, $str) = @_;
-  my $estr, $i;
+  my ($estr, $i);
 
   if (!$str) { $str = $self; }
 
@@ -163,11 +163,14 @@ sub clear_callbacks {
 
 sub new {
   my ($tochost, $authorizer, $port, $nickname, $password) = @_;
-  my $self;
-  my $ipaddr;
-  my $sflap;
+  my ($self, $ipaddr, $sflap);
 
-  $self = { nickname => $nickname, password => $password, caller => "$file:$line" };
+  $self = { 
+      nickname => $nickname, 
+      password => $password, 
+      caller => "file:line" 
+      };
+  
   bless($self);
 
   $sflap = AOL::SFLAP::new($tochost, $authorizer, $port, $nickname);
@@ -195,7 +198,7 @@ sub destroy {
   print "toc destroy\n";
   $self->{sflap}->destroy();
 
-  $se;f->{callback} = undef;
+  $self->{callback} = undef;
   $self = undef;
 
   return;
@@ -288,6 +291,8 @@ sub init_done {
 
 sub send_im {
   my ($self, $nickname, $message, $auto) = @_;
+
+  $auto = "" unless defined $auto;
 
   $self->send("toc_send_im $nickname " . &encode_string($message) . " $auto");
   return;
@@ -460,7 +465,7 @@ sub set_info {
 
 sub sflap_signon {
   my ($self, $data, $password, $language, $version, $toc) = @_;
-  my $buffer, $roasted_password;
+  my ($buffer, $roasted_password);
 
   $roasted_password = roast_password($password, $ROASTING_KEY);
 
@@ -472,9 +477,11 @@ sub sflap_signon {
 
 sub sflap_data {
   my ($self, $data, $toc) = @_;
-  my $cmd;
+  my ($cmd, $args);
 
   ($cmd, $args) = ($data =~ /^(\w+)\:(.*)$/);
+
+  return unless defined $cmd && defined $args;
 
   if ($cmd eq "SIGN_ON") {
     ($toc_version) = ($args =~ /^TOC(.*)$/);
