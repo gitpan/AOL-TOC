@@ -4,7 +4,7 @@ use IO;
 use Socket;
 use AOL::SFLAP;
 
-$VERSION      = "0.3";
+$VERSION      = "0.32";
 $TOC_VERSION  = "1.0";
 $ROASTING_KEY = "Tic/Toc";
 

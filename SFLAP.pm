@@ -4,7 +4,7 @@ use IO;
 use IO::Select;
 use Socket;
 
-$VERSION = "0.3";
+$VERSION = "0.32";
 
 $SFLAP_SIGNON    = 1;
 $SFLAP_DATA      = 2;
